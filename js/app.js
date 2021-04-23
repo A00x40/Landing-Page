@@ -2,7 +2,7 @@
 
 class NavBar {
 
-    // To Get Sections Count in case of dynamic section addition 
+    // To get sections id & count to create li elements
     navSections = document.querySelectorAll("section");
 
     // ul which section links will be added to
@@ -31,19 +31,27 @@ class NavBar {
             child.addEventListener( 'click' , (e) => {
                 e.preventDefault();
         
-                document.getElementById(e.target.dataset.nav__id).scrollIntoView({behavior: "smooth"});
+                let secToGo = document.getElementById(e.target.dataset.nav__id);
+                secToGo.scrollIntoView({behavior: "smooth"});
+                addActiveClass(secToGo);
             });
         });
     };
 }
 
 
-// build the nav
+/** build the nav */ 
 
-var navBar = new NavBar();
+const navBar = new NavBar();
 navBar.NavBar();
 
 
+/** Add Active Class */ 
+const addActiveClass = ( currSection ) => {
 
+    // Remove active-class and add it to clicked section
+    document.querySelector(".your-active-class")?.classList.remove("your-active-class");
+    currSection.setAttribute( "class" , "your-active-class" );
+} 
 
 
