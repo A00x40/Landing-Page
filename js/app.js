@@ -49,9 +49,32 @@ navBar.NavBar();
 /** Add Active Class */ 
 const addActiveClass = ( currSection ) => {
 
-    // Remove active-class and add it to clicked section
+    // Add active-class to clicked section
     document.querySelector(".your-active-class")?.classList.remove("your-active-class");
     currSection.setAttribute( "class" , "your-active-class" );
 } 
+
+/** Change Active Class while scrolling */
+
+const sectionInView = (sec) => {
+    
+    // Get section position in view port
+    var bounding  = sec.getBoundingClientRect();
+    var secHeight = sec.offsetHeight;
+    var secWidth  = sec.offsetWidth;
+
+    // Check if part of the section is in viewport boundaries
+    return (
+        bounding.top    >= -secHeight  &&
+        bounding.left   >= -secWidth   &&
+        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) + secHeight &&
+        bounding.right  <= (window.innerWidth  || document.documentElement.clientWidth)  + secWidth
+    );
+}
+
+// Check if part of the section is in viewport at the current time
+window.addEventListener( 'scroll' , () => {
+    navBar.navSections.forEach( (sec) => { if( sectionInView(sec) ) addActiveClass(sec); } );
+});
 
 
