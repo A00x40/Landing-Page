@@ -60,21 +60,25 @@ const sectionInView = (sec) => {
     
     // Get section position in view port
     var bounding  = sec.getBoundingClientRect();
-    var secHeight = sec.offsetHeight;
-    var secWidth  = sec.offsetWidth;
+    var buffer = 280;
 
     // Check if part of the section is in viewport boundaries
     return (
-        bounding.top    >= -secHeight  &&
-        bounding.left   >= -secWidth   &&
-        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) + secHeight &&
-        bounding.right  <= (window.innerWidth  || document.documentElement.clientWidth)  + secWidth
+        bounding.top    >= -buffer  &&
+        bounding.left   >= -buffer  &&
+        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) + buffer &&
+        bounding.right  <= (window.innerWidth  || document.documentElement.clientWidth)  + buffer
     );
 }
 
 // Check if part of the section is in viewport at the current time
 window.addEventListener( 'scroll' , () => {
-    navBar.navSections.forEach( (sec) => { if( sectionInView(sec) ) addActiveClass(sec); } );
+    navBar.navSections.forEach( (sec) => { 
+        
+        // Check if current section isn't active
+        if( !sec.classList.contains("your-active-class") && sectionInView(sec) )
+            addActiveClass(sec); 
+    } );
 });
 
 
